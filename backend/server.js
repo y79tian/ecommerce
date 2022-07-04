@@ -1,8 +1,9 @@
 import express from "express"; // common js by default, not ES modules (as we used in the frontend)
 import dotenv from "dotenv";
-import colors from "colors";
-import products from "./data/products.js"; // must add .js if we would like to import a file
-import connectDB from "./config/db.js";
+import colors from "colors"; // must appear here
+import connectDB from "./config/db.js"; // must add .js if we would like to import a file
+import productRouter from "./routes/productRoutes.js";
+import { notFound, errorHandler } from "./middleware/errorMiddleware.js";
 
 dotenv.config();
 connectDB();
@@ -10,20 +11,21 @@ connectDB();
 const app = express();
 
 app.get("/", (req, res) => {
-  res.send("API is haha...");
+  res.send("API is running..");
 });
 
-app.get("/api/products", (req, res) => {
-  res.json(products);
-});
+app.use("/api/products", productRouter);
 
-app.get("/api/products/:id", (req, res) => {
-  const product = products.find((p) => p._id === req.params.id);
-  res.json(product);
-});
+// if original url does not match any of the url above, it goes to the below error handler
+app.use(notFound);
+
+// handle the error that is thrown in the app.use above
+app.use(errorHandler);
 
 const PORT = process.env.PORT || 4000;
 app.listen(
   PORT,
-  console.log(`Server running in ${process.env.NODE_ENV} mode on port ${PORT}`.yellow.bold)
+  console.log(
+    `Server running in ${process.env.NODE_ENV} mode on port ${PORT}`.yellow.bold
+  )
 );

@@ -33,7 +33,7 @@ const productSchema = mongoose.Schema(
       required: true,
       default: 0,
     },
-    // Refer to other schema
+    // Refer to other schem
     reviews: [reviewSchema],
     rating: {
       type: Number,
