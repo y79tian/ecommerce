@@ -22,7 +22,7 @@ const ProductScreen = () => {
   const productDetails = useSelector((state) => state.productDetails);
   const { loading, product, error } = productDetails;
 
-  const [qty, setQty] = useState(0);
+  const [qty, setQty] = useState(1);
 
   const addToCartHandler = () => {
     navigate(`/cart/${id}?qty=${qty}`);
@@ -95,6 +95,7 @@ const ProductScreen = () => {
                           as="select"
                           value={qty}
                           onChange={(e) => setQty(e.target.value)}
+                          style={{ padding: "0.75rem 0.2rem" }}
                         >
                           {/* [1, 2, 3, 4] */}
                           {[...Array(product.countInStock).keys()].map((x) => (
