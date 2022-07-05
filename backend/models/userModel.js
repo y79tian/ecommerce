@@ -28,9 +28,20 @@ const userSchema = mongoose.Schema(
 );
 
 // create a customized method that can be used on an instantiated user
-userSchema.methods.matchPassword = async function(enteredPassword) {
+userSchema.methods.matchPassword = async function (enteredPassword) {
   return await bcrypt.compare(enteredPassword, this.password); // "this" is the instantiated user
-}
+};
+
+
+// way to add pre middleware function to hash password before a user object is saved
+userSchema.pre("save", async function (next) {
+  if (!this.isModified("password")) {
+    next();
+  }
+  const salt = await bcrypt.genSalt(10);
+  this.password = await bcrypt.hash(this.password, salt);
+});
+
 const User = mongoose.model("User", userSchema);
 
 export default User;
