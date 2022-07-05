@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Link, useParams, useLocation, Navigate } from "react-router-dom";
+import { Link, useParams, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
   Row,
@@ -19,6 +19,7 @@ const CartScreen = () => {
   // location.search == ?qty=1
   const qty = location.search ? Number(location.search.split("=")[1]) : 1;
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const cart = useSelector((state) => state.cart);
   const { cartItems } = cart;
@@ -34,7 +35,7 @@ const CartScreen = () => {
   };
 
   const checkoutHandler = () => {
-    Navigate("/login?redirect=shipping");
+    navigate("/login?redirect=shipping");
   };
   return (
     <Row>
@@ -111,7 +112,7 @@ const CartScreen = () => {
                 type="button"
                 className="btn-block"
                 disabled={cartItems.length === 0}
-                onClick={checkoutHandler}
+                onClick={()=>checkoutHandler()}
               >
                 Proceed To Checkout
               </Button>
