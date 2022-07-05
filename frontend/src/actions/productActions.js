@@ -6,7 +6,7 @@ import {
   PRODUCT_DETAILS_REQUEST,
   PRODUCT_DETAILS_SUCCESS,
   PRODUCT_DETAILS_FAIL,
-} from "../constants/productConstants.js";
+} from "../constants/productConstants";
 
 // consider the function below as action creator, the constants above stands for the actions
 // redux thunk,for async functions: add function inside function

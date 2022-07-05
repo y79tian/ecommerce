@@ -11,9 +11,9 @@ import {
   Form,
 } from "react-bootstrap";
 import Rating from "../components/Rating";
-import { listProductDetails } from "../actions/productActions.js";
-import Loader from "../components/Loader.js";
-import Message from "../components/Message.js";
+import { listProductDetails } from "../actions/productActions";
+import Loader from "../components/Loader";
+import Message from "../components/Message";
 
 const ProductScreen = () => {
   const { id } = useParams();
