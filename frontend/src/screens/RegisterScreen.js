@@ -25,14 +25,20 @@ const LoginScreen = () => {
   const submitHandler = (e) => {
     e.preventDefault(); // prevent the fresh property in the "enter" key
     if (password !== confirmPassword) {
-        setMessage('Passwords do not match');
+      setMessage("Passwords do not match");
     } else {
-        dispatch(register(name, email, password));
+      dispatch(register(name, email, password));
     }
   };
 
   useEffect(() => {
-    if (userInfo) navigate(redirect);
+    if (userInfo) {
+      if (redirect === "/") {
+        navigate("/");
+      } else {
+        navigate(`/${redirect}`);
+      }
+    }
   }, [navigate, userInfo, redirect]);
   return (
     <FormContainer>
