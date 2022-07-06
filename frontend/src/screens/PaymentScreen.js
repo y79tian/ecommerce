@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Form, Button, Col } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
@@ -19,7 +19,7 @@ const PaymentScreen = () => {
   const submitHandler = (e) => {
     e.preventDefault();
     dispatch(savePaymentMethod(paymentMethod));
-    navigate("/placeOrder");
+    navigate("/placeorder");
   };
   return (
     <FormContainer>
@@ -29,7 +29,6 @@ const PaymentScreen = () => {
         <Form.Group>
           <Form.Label as="legend">SelectMethod</Form.Label>
 
-          <Col>
             <Form.Check
               type="radio"
               label="PayPal or Credit Card"
@@ -39,7 +38,6 @@ const PaymentScreen = () => {
               checked
               onChange={(e) => setPaymentMethod(e.target.value)}
             ></Form.Check>
-          </Col>
         </Form.Group>
         <Button variant="primary" type="submit" className="mt-3">
           Continue
