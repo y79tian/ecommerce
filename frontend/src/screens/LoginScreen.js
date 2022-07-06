@@ -25,7 +25,7 @@ const LoginScreen = () => {
   };
 
   useEffect(() => {
-    if (userInfo) navigate(redirect);
+    if (userInfo) navigate(`/${redirect}`);
   }, [navigate, userInfo, redirect]);
   return (
     <FormContainer>
