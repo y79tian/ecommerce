@@ -22,6 +22,10 @@ app.use("/api/products", productRouter);
 app.use("/api/users", userRouter);
 app.use("/api/orders", orderRouter);
 
+app.get("/api/config/paypal", (req, res) => {
+  res.send(process.env.PAYPAL_CLIENT_ID);
+});
+
 // if original url does not match any of the url above, it goes to the below error handler
 app.use(notFound);
 
