@@ -1,21 +1,37 @@
 import React, { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { LinkContainer } from "react-router-bootstrap";
 import { Table, Button, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import Message from "../components/Message";
 import Loader from "../components/Loader";
-import { listUsers } from "../actions/userActions";
+import { listUsers, deleteUser } from "../actions/userActions";
 
 const UserListScreen = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const userList = useSelector((state) => state.userList);
   const { error, users, loading } = userList;
 
-  const onDeleteHandler = (userId) => {};
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
+
+  const userDelete = useSelector((state) => state.userDelete);
+  const { success: successDelete } = userDelete;
+
+  const onDeleteHandler = (id, name) => {
+    if (window.confirm(`Are you sure to delete ${name}`))
+      dispatch(deleteUser(id));
+  };
 
   useEffect(() => {
-    dispatch(listUsers());
-  }, [dispatch]);
+    if (userInfo && userInfo.isAdmin) {
+      dispatch(listUsers());
+    } else {
+      navigate("/login");
+    }
+  }, [dispatch, navigate, userInfo, successDelete]);
 
   return (
     <>
@@ -36,7 +52,7 @@ const UserListScreen = () => {
             </tr>
           </thead>
           <tbody>
-            {users.map((user) => 
+            {users.map((user) => (
               <tr key={user._id}>
                 <td>{user._id}</td>
                 <td>{user.name}</td>
@@ -59,13 +75,13 @@ const UserListScreen = () => {
                   <Button
                     variant="danger"
                     className="btn-sm"
-                    onClick={() => onDeleteHandler(user._id)}
+                    onClick={() => onDeleteHandler(user._id, user.name)}
                   >
                     <i className="fas fa-trash" />
                   </Button>
                 </td>
               </tr>
-            )}
+            ))}
           </tbody>
         </Table>
       )}
