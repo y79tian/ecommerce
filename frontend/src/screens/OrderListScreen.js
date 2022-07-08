@@ -17,13 +17,6 @@ const OrderListScreen = () => {
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
 
-  const onDeleteHandler = (id, name) => {
-    if (window.confirm(`Are you sure to delete ${name}`)) {
-      // delete order
-      console.log("delete order");
-    }
-  };
-
   useEffect(() => {
     if (userInfo && userInfo.isAdmin) {
       dispatch(listOrders());
