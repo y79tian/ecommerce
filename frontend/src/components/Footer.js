@@ -6,7 +6,7 @@ const Footer = () => {
       <Container>
         {/* row and col are grid system in bootstrap */}
         <Row>
-          <Col className="text-center py-3">Copyright &copy; ProShop</Col>
+          <Col className="text-center py-3">Copyright &copy; Kitty City</Col>
         </Row>
       </Container>
     </footer>
