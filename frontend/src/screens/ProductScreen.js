@@ -9,7 +9,6 @@ import {
   Card,
   Button,
   Form,
-  FormGroup,
 } from "react-bootstrap";
 import Rating from "../components/Rating";
 import {
@@ -95,7 +94,7 @@ const ProductScreen = () => {
             </Col>
             <Col md={3}>
               <Card>
-                <ListGroup variant="flush">
+                <ListGroup variant="flush" >
                   <ListGroup.Item>
                     <Row>
                       <Col>Price:</Col>
@@ -144,7 +143,7 @@ const ProductScreen = () => {
                   <ListGroup.Item>
                     <Button
                       onClick={addToCartHandler}
-                      className="btn-block"
+                      className="btn-block rounded"
                       type="button"
                       disabled={product.countInStock === 0}
                     >
@@ -168,7 +167,7 @@ const ProductScreen = () => {
                     <p>{review.comment}</p>
                   </ListGroup.Item>
                 ))}
-                <h2 style={{marginTop: 32}}>Write a Customer Review</h2>
+                <h2 style={{ marginTop: 32 }}>Write a Customer Review</h2>
                 <ListGroup.Item>
                   {errorProductReview && (
                     <Message variant="danger">{errorProductReview}</Message>
@@ -181,6 +180,7 @@ const ProductScreen = () => {
                           as="select"
                           value={rating}
                           onChange={(e) => setRating(Number(e.target.value))}
+                          className="rounded"
                         >
                           <option value="5">5 - Excellent</option>
                           <option value="4">4 - Very Good</option>
@@ -196,11 +196,16 @@ const ProductScreen = () => {
                           row="5"
                           value={comment}
                           onChange={(e) => setComment(e.target.value)}
+                          className="rounded"
                         >
                           {comment}
                         </Form.Control>
                       </Form.Group>
-                      <Button type="submit" variant="primary" className="mt-3">
+                      <Button
+                        type="submit"
+                        variant="primary"
+                        className="mt-3 rounded"
+                      >
                         Submit
                       </Button>
                     </Form>

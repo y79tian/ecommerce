@@ -3,14 +3,14 @@ import React from "react";
 const Rating = ({ value, text, color }) => {
   return (
     <div className="rating">
-      {[1, 2, 3, 4, 5].map((item) => (
-        <span key={item}>
+      {[...Array(5).keys()].map((item) => (
+        <span key={item + 1}>
           <i
             style={{ color }}
             className={
-              value >= item
+              value >= item + 1
                 ? "fa-solid fa-star"
-                : value >= item - 0.5
+                : value >= item + 1 - 0.5
                 ? "fa-solid fa-star-half-stroke"
                 : "fa-regular fa-star"
             }

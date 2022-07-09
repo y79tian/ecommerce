@@ -18,28 +18,31 @@ import {
   PRODUCT_CREATE_REVIEW_SUCCESS,
   PRODUCT_CREATE_REVIEW_REQUEST,
   PRODUCT_CREATE_REVIEW_FAIL,
-  PRODUCT_CREATE_REVIEW_RESET,
 } from "../constants/productConstants";
 
 // consider the function below as action creator, the constants above stands for the actions
 // redux thunk,for async functions: add function inside function
-export const listProducts = () => async (dispatch) => {
-  try {
-    // when you call dispatch,it triggers the function in the reducer
-    dispatch({ type: PRODUCT_LIST_REQUEST });
-    const { data } = await axios.get("/api/products");
-    dispatch({ type: PRODUCT_LIST_SUCCESS, payload: data });
-  } catch (error) {
-    // handle error
-    dispatch({
-      type: PRODUCT_LIST_FAIL,
-      payload:
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message,
-    });
-  }
-};
+export const listProducts =
+  (keyword = "", pageNumber = '') =>
+  async (dispatch) => {
+    try {
+      // when you call dispatch,it triggers the function in the reducer
+      dispatch({ type: PRODUCT_LIST_REQUEST });
+      const { data } = await axios.get(
+        `/api/products?keyword=${keyword}&page=${pageNumber}`
+      );
+      dispatch({ type: PRODUCT_LIST_SUCCESS, payload: data });
+    } catch (error) {
+      // handle error
+      dispatch({
+        type: PRODUCT_LIST_FAIL,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      });
+    }
+  };
 
 export const listProductDetails = (id) => async (dispatch) => {
   try {
@@ -146,34 +149,35 @@ export const updateProduct = (product) => async (dispatch, getState) => {
   }
 };
 
-export const createProductReview = (productId, review) => async (dispatch, getState) => {
-  try {
-    dispatch({ type: PRODUCT_CREATE_REVIEW_REQUEST });
+export const createProductReview =
+  (productId, review) => async (dispatch, getState) => {
+    try {
+      dispatch({ type: PRODUCT_CREATE_REVIEW_REQUEST });
 
-    // destruct twice
-    const {
-      userLogin: { userInfo },
-    } = getState();
-    const config = {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${userInfo.token}`,
-      },
-    };
-    const { data } = await axios.post(
-      `/api/products/${productId}/review`,
-      review,
-      config
-    );
-    dispatch({ type: PRODUCT_CREATE_REVIEW_SUCCESS, payload: data });
-  } catch (error) {
-    const message =
-      error.response && error.response.data.message
-        ? error.response.data.message
-        : error.message;
-    dispatch({
-      type: PRODUCT_CREATE_REVIEW_FAIL,
-      payload: message,
-    });
-  }
-};
+      // destruct twice
+      const {
+        userLogin: { userInfo },
+      } = getState();
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      };
+      const { data } = await axios.post(
+        `/api/products/${productId}/review`,
+        review,
+        config
+      );
+      dispatch({ type: PRODUCT_CREATE_REVIEW_SUCCESS, payload: data });
+    } catch (error) {
+      const message =
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message;
+      dispatch({
+        type: PRODUCT_CREATE_REVIEW_FAIL,
+        payload: message,
+      });
+    }
+  };
