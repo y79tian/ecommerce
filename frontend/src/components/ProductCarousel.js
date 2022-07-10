@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { Carousel, Image } from "react-bootstrap";
@@ -8,7 +8,6 @@ import { listTopProducts } from "../actions/productActions";
 
 const ProductCarousel = () => {
   const dispatch = useDispatch();
-  const [index, setIndex] = useState(0);
 
   const productTopRated = useSelector((state) => state.productTopRated);
   const { loading, error, products } = productTopRated;
@@ -17,9 +16,6 @@ const ProductCarousel = () => {
     dispatch(listTopProducts());
   }, [dispatch]);
 
-  const handleSelect = (selectedIndex, e) => {
-    setIndex(selectedIndex);
-  };
   return loading ? (
     <Loader />
   ) : error ? (
