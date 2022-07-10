@@ -124,7 +124,7 @@ const ProductScreen = () => {
                             as="select"
                             value={qty}
                             onChange={(e) => setQty(e.target.value)}
-                            style={{ padding: "0.75rem 0.2rem" }}
+                            style={{ padding: "0.3rem 0.2rem" }}
                           >
                             {/* [1, 2, 3, 4] */}
                             {[...Array(product.countInStock).keys()].map(
