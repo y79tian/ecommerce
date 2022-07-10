@@ -18,12 +18,15 @@ import {
   PRODUCT_CREATE_REVIEW_SUCCESS,
   PRODUCT_CREATE_REVIEW_REQUEST,
   PRODUCT_CREATE_REVIEW_FAIL,
+  PRODUCT_TOP_REQUEST,
+  PRODUCT_TOP_SUCCESS,
+  PRODUCT_TOP_FAIL,
 } from "../constants/productConstants";
 
 // consider the function below as action creator, the constants above stands for the actions
 // redux thunk,for async functions: add function inside function
 export const listProducts =
-  (keyword = "", pageNumber = '') =>
+  (keyword = "", pageNumber = "") =>
   async (dispatch) => {
     try {
       // when you call dispatch,it triggers the function in the reducer
@@ -181,3 +184,21 @@ export const createProductReview =
       });
     }
   };
+
+export const listTopProducts = () => async (dispatch) => {
+  try {
+    // when you call dispatch,it triggers the function in the reducer
+    dispatch({ type: PRODUCT_TOP_REQUEST });
+    const { data } = await axios.get(`/api/products/top`);
+    dispatch({ type: PRODUCT_TOP_SUCCESS, payload: data });
+  } catch (error) {
+    // handle error
+    dispatch({
+      type: PRODUCT_TOP_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
